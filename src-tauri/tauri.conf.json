@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "AnimDesk",
+  "version": "1.0.0",
+  "identifier": "app.anidesk.desktop",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://127.0.0.1:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "AnimDesk",
+        "width": 1280,
+        "height": 820,
+        "minWidth": 1000,
+        "minHeight": 650,
+        "center": true,
+        "decorations": true,
+        "backgroundColor": "#0c0d12"
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://shikimori.one https://shikimori.io https://desu.shikimori.one https://desu.shikimori.io https://cdn.myanimelist.net; connect-src 'self' ipc: http://ipc.localhost; object-src 'none'; base-uri 'self'; frame-src 'none'",
+      "devCsp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://shikimori.one https://shikimori.io https://desu.shikimori.one https://desu.shikimori.io https://cdn.myanimelist.net; connect-src 'self' ipc: http://ipc.localhost http://127.0.0.1:1420 ws://127.0.0.1:1420; object-src 'none'; base-uri 'self'; frame-src 'none'"
+    }
+  },
+  "plugins": {
+    "sql": {
+      "preload": ["sqlite:anidesk.db"]
+    }
+  },
+  "bundle": {
+    "icon": ["icons/icon.ico", "icons/icon.png"],
+    "active": true,
+    "targets": ["nsis"],
+    "shortDescription": "Личная библиотека аниме",
+    "category": "Entertainment",
+    "windows": {
+      "nsis": { "languages": ["Russian"], "displayLanguageSelector": false }
+    }
+  }
+}

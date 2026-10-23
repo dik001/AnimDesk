@@ -1,0 +1,12 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "main",
+  "description": "Основное окно с точечным доступом к локальной базе AnimDesk.",
+  "windows": ["main"],
+  "permissions": [
+    "sql:default",
+    "sql:allow-execute",
+    "core:path:allow-resolve-directory",
+    "core:path:allow-join"
+  ]
+}
