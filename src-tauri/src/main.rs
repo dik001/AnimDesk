@@ -389,6 +389,21 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn published_migration_bytes_preserve_installed_checksums() {
+        use sha2::{Digest, Sha384};
+
+        // SQLx checksums include line endings. Applied migrations are immutable.
+        for (version, sql, expected) in [
+            (1, INITIAL_MIGRATION, "6ebcd6c7b7c872b05608b8984b22a399f07e3243ec80f542da37faa5b2eb9b23b02170da03b59d508afd6705b8e61c29"),
+            (2, EXTERNAL_IDS_MIGRATION, "6fb290dd06d9b530ee7be4318c97822882213bad803587737ee9a570ce15dd4175df21b9ffa546a1754cc2017adead16"),
+            (3, DETAIL_METADATA_MIGRATION, "699250d760cda7a11fe5a3429ea94a8401f4caeca37c1743d5a8da0facc913a24cb1d24432f3258e440283e4b261669b"),
+            (4, PERSONAL_RATINGS_MIGRATION, "07e98819b8d62fcc5b3e288c5533056c60c178f5f286640c4ed70d3b4b90c3da3fda531a927fb6521f7195ccb82e2f97"),
+        ] {
+            assert_eq!(format!("{:x}", Sha384::digest(sql.as_bytes())), expected, "migration {version}");
+        }
+    }
     use sqlx::sqlite::SqlitePoolOptions;
 
     async fn migrated_pool() -> sqlx::SqlitePool {

@@ -1,3 +1,6 @@
 * text=auto eol=lf
+# Preserve the checksums already stored by installed Windows builds.
+src-tauri/migrations/003_detail_metadata.sql text eol=crlf
+src-tauri/migrations/004_personal_ratings.sql text eol=crlf
 *.png binary
 *.ico binary
