@@ -2,7 +2,7 @@
 
 Дата: 24 октября 2026. Среда: Windows 10 Pro 22H2 (19045), x64, Node 24.14.0, npm 11.9.0, Rust MSVC 1.94.0.
 
-**Статус: кандидат собран, сетевой блокер устранён.** Shikimori `.io` проверен настоящими запросами в release и установленной копии. Оставшиеся ручные проверки ниже ещё не пройдены.
+**Статус: AnimDesk 1.0.0 опубликован.** [Релиз](https://github.com/dik001/AnimDesk/releases/tag/v1.0.0), [успешный Windows workflow](https://github.com/dik001/AnimDesk/actions/runs/40005244997). Установщик скачан из Releases и проверен на Windows 10 с существующей SQLite. Оставшиеся ручные проверки ниже ещё не пройдены.
 
 ## Приложение и данные
 
@@ -34,15 +34,16 @@
 ## Сборка и проверки
 
 - [x] `npm ci --dry-run --ignore-scripts --audit=false`: lockfile совместим; установленное дерево проверено `npm ls --all --depth=0`.
+- [x] Настоящий `npm ci` в чистом Windows runner GitHub Actions — успешно.
 - [x] `npm run lint`, `npm run typecheck`, `npm test`: успешно, 90 тестов.
 - [x] `npm run build`: успешно.
 - [x] `cargo check --manifest-path src-tauri/Cargo.toml --locked`: успешно.
-- [x] `cargo test --manifest-path src-tauri/Cargo.toml --locked`: 36 тестов.
+- [x] `cargo test --manifest-path src-tauri/Cargo.toml --locked`: 37 тестов, включая неизменность checksum миграций после checkout.
 - [x] `cargo fmt --manifest-path src-tauri/Cargo.toml -- --check`: успешно.
 - [x] `npm run test:e2e -- --workers=1 --timeout=60000`: 44/44. Первые прогоны: устаревшие ожидания резервного каталога исправлены; затем два общих таймаута при параллельной компиляции. Итоговый прогон выполнен одним worker.
 - [x] `npm run tauri build`: production executable и настоящий NSIS installer.
 - [x] `npm run tauri build -- --debug --no-bundle --config docs/native-locality.config.json`: изолированная нативная проверка. Первый запуск заблокирован открытым debug executable (os error 5); окно закрыто штатно, повторная сборка успешна.
-- [x] NSIS `AnimDesk_1.0.0_x64-setup.exe`, 4 471 067 байт, SHA256 `3de17a217629b79180cefd1fdf5b164a9def453f965ccfec63445c3ffa71bb67`.
+- [x] Опубликованный NSIS `AnimDesk_1.0.0_x64-setup.exe`, 4 469 939 байт, SHA256 `aa4e7168ba4bffe81b4de00705456f18318d4c244ec0b734deb37e8ebb9c1056`. Скачанный файл совпал с digest GitHub; доступ без авторизации — HTTP 200.
 - [x] Установка и повторная установка `/S`: код 0, установленный файл в `%LOCALAPPDATA%\AnimDesk\animdesk.exe`, два запуска проверены.
 - [ ] Windows 11 и машина без установленного WebView2.
 - [ ] Цифровая подпись установщика: сертификат не настроен.
@@ -51,8 +52,9 @@
 ## Документация и публикация
 
 - [x] README, PRODUCT_SPEC, CATALOG, STORAGE_COMPATIBILITY и журнал проверок актуализированы.
-- [x] Windows x64 workflow с проверками и artifact установщика подготовлен.
-- [ ] Workflow выполнен на GitHub: удалённый запуск не выполнялся.
+- [x] Windows x64 workflow с проверками и публикацией NSIS при отправке тега `v*`.
+- [x] Workflow тега `v1.0.0` выполнен на GitHub: build и release — success; 90 unit-, 44 E2E-, 37 Rust-тестов.
+- [x] Тег указывает на `91dc6a9ca3a7b8c2f125daf62f3b29fd56f2d45d`; опубликованные 121 файла побайтово совпали с проверенным деревом.
 - [x] Подготовленное Git-дерево и локальная история проверены; результаты доступны в локальном отчёте.
 - [x] Подготовленные файлы проверены на известные шаблоны секретов и приватные данные; явных совпадений не обнаружено.
 - [x] Владелец запросил публикацию версии 1.0.0 после устранения сетевого блокера.
