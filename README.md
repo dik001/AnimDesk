@@ -6,7 +6,7 @@
 
 ## Скриншот
 
-![Поиск аниме в AnimDesk](docs/images/search.png)
+![Главная AnimDesk с загруженными обложками каталога](docs/images/search.png)
 
 ## Запуск и проверки
 
